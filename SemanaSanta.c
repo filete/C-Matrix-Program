@@ -21,11 +21,12 @@
 void leeMatriz_file(FILE *, float[MATRIX_W][MATRIX_H], int, int);
 void leeMatriz_cmd(FILE *, float[MATRIX_W][MATRIX_H], int, int);
 void mostrarMatriz(float [MATRIX_W][MATRIX_H],int ,int,char [2]);
-void guardarMatriz(FILE*, float [MATRIX_W][MATRIX_H],int,int);
+void guardarMatriz(FILE *, float [MATRIX_W][MATRIX_H],int,int);
 void sumM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
+void multM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
 void mostrarMenu();
 void ui(int);
-void ejecutarOpcion(int, FILE, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
+void ejecutarOpcion(int, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 void salir();
 
 int main(void){
@@ -40,9 +41,10 @@ int main(void){
 
     leeMatriz_file(matriz_txt, m1_4x4, MATRIX_W, MATRIX_H);
     leeMatriz_cmd(resultado_txt, m2_4x4, MATRIX_W, MATRIX_H);
-    mostrarMenu(resultado_txt, m1_4x4, m2_4x4, mr_4x4);
+    multM1_M2(m1_4x4,m2_4x4,mr_4x4, MATRIX_W, MATRIX_H);
+    //mostrarMenu(resultado_txt, m1_4x4, m2_4x4, mr_4x4);
     //sumM1_M2(m1_4x4, m2_4x4, mr_4x4, MATRIX_W, MATRIX_H);
-    //mostrarMatriz(mr_4x4, MATRIX_H,MATRIX_W,"MR");
+    mostrarMatriz(mr_4x4, MATRIX_H,MATRIX_W,"MR");
     //guardarMatriz(resultado_txt,mr_4x4,MATRIX_W,MATRIX_H);
     return 0;
 }
@@ -129,7 +131,7 @@ void mostrarMatriz(float matriz[MATRIX_W][MATRIX_H],int w, int h, char nombre[2]
             );}
 }
 
-void guardarMatriz(FILE* file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
+void guardarMatriz(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x,y;
 
     if(file != NULL){
@@ -166,6 +168,26 @@ void sumM1_M2(
     }
 }
 
+void multM1_M2(
+    float m1[MATRIX_W][MATRIX_H],
+    float m2[MATRIX_W][MATRIX_H],
+    float mr[MATRIX_W][MATRIX_H],
+    int w, int h
+){
+    int x,y;
+
+    for(size_t i = 0; i < (w*h); i++){
+        y = i % w;
+        x = (int) i/h;
+
+        mr[x][y] =
+        m1[x][0] * m2[0][y] +
+        m1[x][1] * m2[1][y] +
+        m1[x][2] * m2[2][y] +
+        m1[x][3] * m2[3][y];
+    }
+}
+
 void mostrarMenu(FILE file,
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
@@ -174,7 +196,7 @@ void mostrarMenu(FILE file,
     int selector = 1;
     char tecla;
     while(1){
-        scanf("%c",&tecla);
+        scanf(" %[0-9jk]",&tecla);
         if(tecla == 'k'){
             selector == 1 ? selector = 8 : (selector -= 1);
         }else{
@@ -281,7 +303,7 @@ void ui(int selector){
     //system(CLEAR);
 }
 
-void ejecutarOpcion(int selector,FILE file,
+void ejecutarOpcion(int selector,FILE *file,
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
     float mr[MATRIX_W][MATRIX_H]){
@@ -293,7 +315,7 @@ void ejecutarOpcion(int selector,FILE file,
             break;
         case 3:
         case '3':
-            sumM1_M2(m1, m2_4x4, mr_4x4, MATRIX_W, MATRIX_H);
+            sumM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);
             break;
         case 4:
         case '4':
@@ -305,7 +327,7 @@ void ejecutarOpcion(int selector,FILE file,
             break;
         case 6:
         case '6':
-            guardarMatriz(file, mr_4x4, MATRIX_W, MATRIX_H);
+            guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
             break;
         case 7:
         case '7':
@@ -317,7 +339,7 @@ void ejecutarOpcion(int selector,FILE file,
             break;
         case '1':
         default:
-            mostrarMatriz(m1_4x4, MATRIX_W, MATRIX_H, "M1");
+            mostrarMatriz(m1, MATRIX_W, MATRIX_H, "M1");
             break;
     }
 }
@@ -326,10 +348,10 @@ void salir(){
     char salida;
     system(CLEAR);
     printf(B_BLACK"DESEA SALIR?\n"R_RESET
-    UB_GREEN"S"R_RESET B_GREEN"i"R_RESET" (Introduzca \"S\")\n"
-    UB_RED  "N"R_RESET UB_RED "o"R_RESET" (Introduzca \"N\")\n");
-    scanf("% [sInN]",&salida);
-    if(salida = 's' || salida = 'S'){
+    BU_GREEN"S"R_RESET B_GREEN"i"R_RESET" (Introduzca \"S\")\n"
+    BU_RED  "N"R_RESET B_RED  "o"R_RESET" (Introduzca \"N\")\n");
+    scanf(" %[sInN]",&salida);
+    if(salida == 's' || salida == 'S'){
         exit(1);
     }
 }
