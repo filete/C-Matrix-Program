@@ -12,15 +12,15 @@ Crear un programa que:
 ___
 - [x] ### 2. Llame a una función para leer una matriz _M2_ 4x4, desde el teclado
 ___
-- [ ] ### 3. Presenta un menú con las oopciones y pida una opción
+- [x] ### 3. Presenta un menú con las oopciones y pida una opción
 - - [x] a) Mostrar matriz M1
 - - [x] b) Mostrar matriz M2
 - - [x] c) Calcular MR = M1 + M2
-- - [ ] d) Calcular MR = M1 x M2
+- - [x] d) Calcular MR = M1 x M2
 - - [x] e) Mostrar matriz MR
-- - [ ] f) Guardar matriz MR (en archivo _"resultado.txt"_ )
-- - [ ] g) Guardar y mostrar determinante
-- - [ ] z) Salir
+- - [x] f) Guardar matriz MR (en archivo _"resultado.txt"_ )
+- - [x] g) Guardar y mostrar determinante
+- - [x] z) Salir
 ___
 - [ ] ### 4. Llame a una función que resuelva la opción seleccionada o salir del programa
 ___
