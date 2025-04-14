@@ -38,6 +38,16 @@
 #define U_CYAN    "\x1b[4;36m"
 #define U_WHITE   "\x1b[4;37m"
 
+// Bold Underlines Colors
+#define BU_BLACK   "\x1b[1;4;30m"
+#define BU_RED     "\x1b[1;4;31m"
+#define BU_GREEN   "\x1b[1;4;32m"
+#define BU_YELLOW  "\x1b[1;4;33m"
+#define BU_BLUE    "\x1b[1;4;34m"
+#define BU_MAGENTA "\x1b[1;4;35m"
+#define BU_CYAN    "\x1b[1;4;36m"
+#define BU_WHITE   "\x1b[1;4;37m"
+
 // Background Colors
 #define BG_BLACK   "\x1b[40m"
 #define BG_RED     "\x1b[41m"
