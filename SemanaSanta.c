@@ -27,7 +27,7 @@ void sumM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRI
 void multM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
 void mostrarDeterminante(float [MATRIX_W][MATRIX_H]);
 void mostrarMenu();
-void ui(int);
+void tui(int);
 void ejecutarOpcion(int,bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 int salir();
 
@@ -66,13 +66,13 @@ void leeMatriz_file(FILE *matriz_txt, float matriz[MATRIX_W][MATRIX_H], int w, i
             (i % w < 3 ? (printf("%g ",matriz[x][y]) ) :
                 (printf("%g \n",matriz[x][y]) )
             );*/
-
         }
-    fclose(matriz_txt);
-        printf(R_GREEN"Archivo " U_YELLOW "%s"R_RESET R_GREEN" leido correctamente "R_YELLOW":)\n"R_RESET, I_FILENAME +2);
+        fclose(matriz_txt);
+        printf(R_GREEN"\nArchivo " U_YELLOW "%s"R_RESET R_GREEN" leido correctamente "R_YELLOW":)\n"R_RESET, I_FILENAME +2);
     }else{
     char cierrePorError;
-        printf(R_RED"ERROR al abrir el archivo " U_YELLOW "%s" R_RESET R_RED" :(\n"R_RESET,I_FILENAME +2);
+        printf(R_RED"\n\nERROR al abrir el archivo " U_YELLOW "%s" R_RESET R_RED" :(\n"R_RESET,I_FILENAME +2);
+        printf("\nCompruebe que el fichero "U_BLACK"%s"R_RESET" se encuentra en el directorio donde se encuentra el programa.\n", I_FILENAME+2);
         printf("\nSe va a cerrar el programa. [Introduzca "U_RED"cualquier tecla"R_RESET" para salir]\n");
         scanf(" %c",&cierrePorError);
         if(cierrePorError){
@@ -81,13 +81,12 @@ void leeMatriz_file(FILE *matriz_txt, float matriz[MATRIX_W][MATRIX_H], int w, i
     }
 }
 
-void leeMatriz_cmd(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
+void leeMatriz_cmd(FILE *resultado_txt, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x, y;
     char c;
 
-    if(file != NULL){
+    if(resultado_txt != NULL){
         printf("\nIntroduzca la matriz "R_CYAN"M2"R_RESET" para almacenarla en el documento "U_YELLOW"%s"R_RESET":\n", O_FILENAME + 2);
-        fclose(file);
         for(size_t i = 0; i < (w*h) ; i++){
             y = i % w;
             x = (int) i/h;
@@ -95,14 +94,15 @@ void leeMatriz_cmd(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
             printf("Introduce el valor para la posición "R_BLUE"%u,%u"R_RESET": ",x + 1,y + 1);
             scanf("%f", &matriz[x][y]);
 
-            i % w == 0 ? fprintf(file ,"%8g",matriz[x][y]) :
-                (i % w < 3 ? (fprintf(file,"%8g",matriz[x][y]) ) :
-                    (fprintf(file,"%8g \n",matriz[x][y]) ));
+            i % w == 0 ? fprintf(resultado_txt ,"%8g",matriz[x][y]) :
+                (i % w < 3 ? (fprintf(resultado_txt,"%8g",matriz[x][y]) ) :
+                    (fprintf(resultado_txt,"%8g \n",matriz[x][y]) ));
         }
+        fclose(resultado_txt);
     }else{
         char cierrePorError;
-        printf(R_RED"ERROR al abrir el archivo " U_YELLOW "%s" R_RESET R_RED" :(\n"R_RESET,I_FILENAME +2);
-        printf(R_RED"Compruebe, en caso de ya existir, si el fichero resultado.txt tiene permisos de escritura"R_RESET);
+        printf(R_RED"\nERROR al abrir el archivo " U_YELLOW "%s" R_RESET R_RED" :(\n"R_RESET,O_FILENAME +2);
+        printf(R_RED"\nCompruebe, en caso de ya existir, si el fichero resultado.txt tiene permisos de escritura"R_RESET);
         printf("\nSe va a cerrar el programa. [Introduzca "U_RED"cualquier tecla"R_RESET" para salir]\n");
         scanf(" %c",&cierrePorError);
         if(cierrePorError){
@@ -110,7 +110,7 @@ void leeMatriz_cmd(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
         }
     }
 
-    printf("\n"R_GREEN"Archivo "U_YELLOW"%s"R_RESET R_GREEN" creado correctamente "R_YELLOW":)\n"R_RESET,I_FILENAME+2);
+    printf("\n"R_GREEN"Archivo "U_YELLOW"%s"R_RESET R_GREEN" creado correctamente "R_YELLOW":)\n"R_RESET,O_FILENAME+2);
     printf("Para continuar introduzca cualquier tecla: ");
     scanf(" %c", &c);
     if(c){
@@ -122,7 +122,7 @@ void leeMatriz_cmd(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
 
 void mostrarMatriz(float matriz[MATRIX_W][MATRIX_H],int w, int h, char nombre[2]){
     int x,y;
-    printf("\nMatriz "R_CYAN"%s"R_RESET":\n", nombre);
+    printf("\n\nMatriz "R_CYAN"%s"R_RESET":\n\n", nombre);
 
     for(size_t i = 0; i < (w*h); i++){
         y = i % w;
@@ -169,7 +169,7 @@ void sumM1_M2(
 
         mr[x][y] = m1[x][y] + m2[x][y];
     }
-    printf(R_GREEN"Suma realizada correctamente "R_YELLOW":)"R_RESET);
+    printf(R_GREEN"\n\nSuma realizada correctamente "R_YELLOW":)"R_RESET);
 }
 
 void multM1_M2(
@@ -190,7 +190,7 @@ void multM1_M2(
         m1[x][2] * m2[2][y] +
         m1[x][3] * m2[3][y];
     }
-    printf(R_GREEN"Producto realizado correctamente "R_YELLOW":)"R_RESET);
+    printf(R_GREEN"\n\nProducto realizado correctamente "R_YELLOW":)"R_RESET);
 }
 
 void mostrarDeterminante(float matriz[MATRIX_W][MATRIX_H]){
@@ -231,16 +231,16 @@ void mostrarMenu(FILE * file,
                 }
             }
         }
-        ui(selector);
+        tui(selector);
         if(seleccion){ejecutarOpcion(selector, seleccion, file, m1, m2, mr);}
     }
 }
 
-void ui(int selector){
+void tui(int selector){
     system(CLEAR);
     switch(selector) {
     case 2:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
                         B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
                         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -341,37 +341,37 @@ void ejecutarOpcion(int selector, bool seleccion,
     system(CLEAR);
 
         switch(selector){
-            case 2:
-            case '2':
-        mostrarMatriz(m2, MATRIX_W, MATRIX_H, "M2");
-                break;
-                case 3:
+        case 2:
+        case '2':
+            mostrarMatriz(m2, MATRIX_W, MATRIX_H, "M2");
+            break;
+        case 3:
         case '3':
             sumM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);
-                break;
-            case 4:
-            case '4':
-        multM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);
-                break;
-                case 5:
+            break;
+        case 4:
+        case '4':
+            multM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);
+            break;
+        case 5:
         case '5':
             mostrarMatriz(mr, MATRIX_W, MATRIX_H, "MR");
-                break;
-            case 6:
-            case '6':
-        guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
+            break;
+        case 6:
+        case '6':
+            guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
                 break;
                 case 7:
         case '7':
             guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
-                mostrarDeterminante(mr);
+            mostrarDeterminante(mr);
             break;
-            case 8:
-            case '8':
-                if(salir()){
-                    volver = 'v';
-                }
-                break;
+        case 8:
+        case '8':
+            if(salir()){
+                volver = 'v';
+            }
+            break;
         case '1':
         default:
                 mostrarMatriz(m1, MATRIX_W, MATRIX_H, "M1");
@@ -386,7 +386,7 @@ void ejecutarOpcion(int selector, bool seleccion,
 int salir(){
     char salida;
     system(CLEAR);
-    printf(B_BLACK"DESEA SALIR?\n"R_RESET
+    printf(B_BLACK"\n\nDESEA SALIR?\n\n"R_RESET
     BU_RED  "S"R_RESET B_RED  "i"R_RESET" (Introduzca \"S\")\n"
     BU_GREEN"N"R_RESET B_GREEN"o"R_RESET" (Introduzca \"N\")\n");
     scanf(" %[sInN]",&salida);
