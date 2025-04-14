@@ -30,6 +30,7 @@ void mostrarMenu(FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H],
 void tui(int);
 void ejecutarOpcion(int, bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 int salir();
+void mostrarInfo();
 
 int main(void){
     float m1_4x4 [MATRIX_W][MATRIX_H];
@@ -235,7 +236,7 @@ void tui(int selector){
     system(CLEAR);
     switch(selector) {
     case 2:
-        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\n\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
         B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -382,11 +383,23 @@ int salir(){
     char salida;
     system(CLEAR);
     printf(B_BLACK"\n\nDESEA SALIR?\n\n"R_RESET
-    BU_RED  "S"R_RESET B_RED  "i"R_RESET" (Introduzca \"S\")\n"
-    BU_GREEN"N"R_RESET B_GREEN"o"R_RESET" (Introduzca \"N\")\n");
-    scanf(" %[sInN]",&salida);
+    BU_RED  "S"R_RESET B_RED  "i"R_RESET" \t(Introduzca \"S\")\n"
+    BU_GREEN"N"R_RESET B_GREEN"o"R_RESET" \t(Introduzca \"N\")\n"
+    U_BLACK"I"R_RESET R_BLACK"nfo"R_RESET" \t(Introduzca \"I\")\n");
+    scanf(" %[sInNiI]",&salida);
     if(salida == 's' || salida == 'S'){
         exit(1);
+    }else{
+        if(salida == 'i' || salida == 'I'){
+            mostrarInfo();
+        }
     }
     return 1;
+}
+
+void mostrarInfo(){
+    system(CLEAR);
+    printf("\nPrograma realizado por Albert Tambwe Miñón Apr/2025"
+    "\nPara Progrmación - Ingeniería Informática - UBU\n\n"
+    U_BLUE"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
 }
