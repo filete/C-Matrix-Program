@@ -9,6 +9,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include "colorGuide.c"
 
 #define I_FILENAME "./matriz.txt"
@@ -24,9 +25,10 @@ void mostrarMatriz(float [MATRIX_W][MATRIX_H],int ,int,char [2]);
 void guardarMatriz(FILE *, float [MATRIX_W][MATRIX_H],int,int);
 void sumM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
 void multM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
+void mostrarDeterminante(float [MATRIX_W][MATRIX_H]);
 void mostrarMenu();
 void ui(int);
-void ejecutarOpcion(int, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
+void ejecutarOpcion(int,bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 void salir();
 
 int main(void){
@@ -42,9 +44,10 @@ int main(void){
     leeMatriz_file(matriz_txt, m1_4x4, MATRIX_W, MATRIX_H);
     leeMatriz_cmd(resultado_txt, m2_4x4, MATRIX_W, MATRIX_H);
     multM1_M2(m1_4x4,m2_4x4,mr_4x4, MATRIX_W, MATRIX_H);
-    //mostrarMenu(resultado_txt, m1_4x4, m2_4x4, mr_4x4);
+    mostrarMenu(resultado_txt, m1_4x4, m2_4x4, mr_4x4);
     //sumM1_M2(m1_4x4, m2_4x4, mr_4x4, MATRIX_W, MATRIX_H);
-    mostrarMatriz(mr_4x4, MATRIX_H,MATRIX_W,"MR");
+    //mostrarMatriz(mr_4x4, MATRIX_H,MATRIX_W,"MR");
+    //mostrarDeterminante(m1_4x4);
     //guardarMatriz(resultado_txt,mr_4x4,MATRIX_W,MATRIX_H);
     return 0;
 }
@@ -188,42 +191,56 @@ void multM1_M2(
     }
 }
 
+void mostrarDeterminante(float matriz[MATRIX_W][MATRIX_H]){
+    float determinante = 0;
+    for(size_t i = 0; i < MATRIX_W ; i++){
+        determinante += (matriz[0][i] * matriz[1][(i+1) % 4] * matriz[2][(i+2) % 4] * matriz[3][(i+3) %4] -
+        matriz[0][i] * matriz[1][(i-1) % 4] * matriz[2][(i-2) % 4] * matriz[3][(i-3) %4]);
+    }
+    printf("\nDeterminante: %g\n", determinante);
+}
+
 void mostrarMenu(FILE file,
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
     float mr[MATRIX_W][MATRIX_H]){
 
     int selector = 1;
+    bool seleccion;
     char tecla;
     while(1){
+        seleccion = false;
         scanf(" %[0-9jk]",&tecla);
         if(tecla == 'k'){
             selector == 1 ? selector = 8 : (selector -= 1);
         }else{
             if(tecla == 'j'){
                 selector == 8 ? selector = 1 : (selector += 1);
+            }else{
+                (tecla >= 0 && tecla <= 9 ? seleccion = true;
             }
         }
         ui(selector);
+        ejecutarOpcion(selector, seleccion, file, m1, m2, mr);
     }
 }
 
 void ui(int selector){
     system(CLEAR);
     switch(selector) {
-        case 2:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+    case 2:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
-            B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            "  [ 4 ] Calcular MR = M1 * M2\n"
-            "  [ 5 ] Mostrar matriz MR\n"
-            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-            "  [ 7 ] Mostrar matriz M1\n"
-            "  [ 8 ] Mostrar matriz M1\n\n");
-            break;
+                        B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
+                        "  [ 3 ] Calcular MR = M1 + M2\n"
+                        "  [ 4 ] Calcular MR = M1 * M2\n"
+                        "  [ 5 ] Mostrar matriz MR\n"
+                        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
+                        "  [ 7 ] Mostrar matriz M1\n"
+                        "  [ 8 ] Mostrar matriz M1\n\n");
+                        break;
         case 3:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+    printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
             "  [ 2 ] Mostrar matriz M2\n"
             B_GREEN"> [ 3 ] Calcular MR = M1 + M2\n"R_RESET
@@ -233,19 +250,19 @@ void ui(int selector){
             "  [ 7 ] Mostrar matriz M1\n"
             "  [ 8 ] Mostrar matriz M1\n");
             break;
-        case 4:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+    case 4:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
-            "  [ 2 ] Mostrar matriz M2\n"
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            B_GREEN"> [ 4 ] Calcular MR = M1 * M2\n"R_RESET
-            "  [ 5 ] Mostrar matriz MR\n"
-            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-            "  [ 7 ] Mostrar matriz M1\n"
-            "  [ 8 ] Mostrar matriz M1\n");
-            break;
+                        "  [ 2 ] Mostrar matriz M2\n"
+                        "  [ 3 ] Calcular MR = M1 + M2\n"
+                        B_GREEN"> [ 4 ] Calcular MR = M1 * M2\n"R_RESET
+                        "  [ 5 ] Mostrar matriz MR\n"
+                        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
+                        "  [ 7 ] Mostrar matriz M1\n"
+                        "  [ 8 ] Mostrar matriz M1\n");
+                        break;
         case 5:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
             "  [ 2 ] Mostrar matriz M2\n"
             "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -255,93 +272,94 @@ void ui(int selector){
             "  [ 7 ] Mostrar matriz M1\n"
             "  [ 8 ] Mostrar matriz M1\n");
             break;
-        case 6:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
-            "  [ 1 ] Mostrar matriz M1\n"
-            "  [ 2 ] Mostrar matriz M2\n"
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            "  [ 4 ] Calcular MR = M1 * M2\n"
-            "  [ 5 ] Mostrar matriz MR\n"
-            B_GREEN"> [ 6 ] Guardar MR (en \"resultado.txt\")\n"R_RESET
-            "  [ 7 ] Mostrar matriz M1\n"
-            "  [ 8 ] Mostrar matriz M1\n");
-            break;
-        case 7:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
-            "  [ 1 ] Mostrar matriz M1\n"
-            "  [ 2 ] Mostrar matriz M2\n"
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            "  [ 4 ] Calcular MR = M1 * M2\n"
-            "  [ 5 ] Mostrar matriz MR\n"
-            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-            B_GREEN"> [ 7 ] Mostrar matriz M1\n"R_RESET
-            "  [ 8 ] Mostrar matriz M1\n");
-            break;
-        case 8:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
-            "  [ 1 ] Mostrar matriz M1\n"
-            "  [ 2 ] Mostrar matriz M2\n"
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            "  [ 4 ] Calcular MR = M1 * M2\n"
-            "  [ 5 ] Mostrar matriz MR\n"
-            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-            "  [ 7 ] Mostrar matriz M1\n"
-            B_GREEN"> [ 8 ] Mostrar matriz M1\n"R_RESET);
-            break;
-        default:
-            printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
-            B_GREEN"> [ 1 ] Mostrar matriz M1\n"R_RESET
-            "  [ 2 ] Mostrar matriz M2\n"
-            "  [ 3 ] Calcular MR = M1 + M2\n"
-            "  [ 4 ] Calcular MR = M1 * M2\n"
-            "  [ 5 ] Mostrar matriz MR\n"
-            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-            "  [ 7 ] Mostrar matriz M1\n"
-            "  [ 8 ] Mostrar matriz M1\n");
-            break;
-    }
-    //system(CLEAR);
-}
+            case 6:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+                "  [ 1 ] Mostrar matriz M1\n"
+                "  [ 2 ] Mostrar matriz M2\n"
+                "  [ 3 ] Calcular MR = M1 + M2\n"
+                "  [ 4 ] Calcular MR = M1 * M2\n"
+                "  [ 5 ] Mostrar matriz MR\n"
+                B_GREEN"> [ 6 ] Guardar MR (en \"resultado.txt\")\n"R_RESET
+                "  [ 7 ] Mostrar matriz M1\n"
+                "  [ 8 ] Mostrar matriz M1\n");
+                break;
+                case 7:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+                    "  [ 1 ] Mostrar matriz M1\n"
+                    "  [ 2 ] Mostrar matriz M2\n"
+                    "  [ 3 ] Calcular MR = M1 + M2\n"
+                    "  [ 4 ] Calcular MR = M1 * M2\n"
+                    "  [ 5 ] Mostrar matriz MR\n"
+                    "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
+                    B_GREEN"> [ 7 ] Mostrar matriz M1\n"R_RESET
+                    "  [ 8 ] Mostrar matriz M1\n");
+                    break;
+                    case 8:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+                        "  [ 1 ] Mostrar matriz M1\n"
+                        "  [ 2 ] Mostrar matriz M2\n"
+                        "  [ 3 ] Calcular MR = M1 + M2\n"
+                        "  [ 4 ] Calcular MR = M1 * M2\n"
+                        "  [ 5 ] Mostrar matriz MR\n"
+                        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
+                        "  [ 7 ] Mostrar matriz M1\n"
+                        B_GREEN"> [ 8 ] Mostrar matriz M1\n"R_RESET);
+                        break;
+                        default:
+        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER] o pulse el no. de opción:\n\n"
+                            B_GREEN"> [ 1 ] Mostrar matriz M1\n"R_RESET
+                            "  [ 2 ] Mostrar matriz M2\n"
+                            "  [ 3 ] Calcular MR = M1 + M2\n"
+                            "  [ 4 ] Calcular MR = M1 * M2\n"
+                            "  [ 5 ] Mostrar matriz MR\n"
+                            "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
+                            "  [ 7 ] Mostrar matriz M1\n"
+                            "  [ 8 ] Mostrar matriz M1\n");
+                            break;
+                            }
+        }
 
-void ejecutarOpcion(int selector,FILE *file,
+        void ejecutarOpcion(int selector, bool seleccion, FILE *file,
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
-    float mr[MATRIX_W][MATRIX_H]){
+                            float mr[MATRIX_W][MATRIX_H]){
 
-    switch(selector){
-        case 2:
-        case '2':
-            mostrarMatriz(m2, MATRIX_W, MATRIX_H, "M2");
+                            switch(selector){
+                            case 2:
+            case '2':
+            if(seleccion){mostrarMatriz(m2, MATRIX_W, MATRIX_H, "M2");}
             break;
         case 3:
         case '3':
-            sumM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);
+            if(seleccion){sumM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);}
             break;
         case 4:
         case '4':
-
+            if(seleccion){multM1_M2(m1, m2, mr, MATRIX_W, MATRIX_H);}
             break;
         case 5:
         case '5':
-            mostrarMatriz(mr, MATRIX_W, MATRIX_H, "MR");
+            if(seleccion){mostrarMatriz(mr, MATRIX_W, MATRIX_H, "MR");}
             break;
         case 6:
         case '6':
-            guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
+            if(seleccion){guardarMatriz(file, mr, MATRIX_W, MATRIX_H);}
             break;
         case 7:
         case '7':
-
+            if(seleccion){guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
+                mostrarDeterminante(mr);}
             break;
         case 8:
         case '8':
-            salir();
+            if(seleccion){salir();
             break;
         case '1':
         default:
-            mostrarMatriz(m1, MATRIX_W, MATRIX_H, "M1");
+            if(seleccion){mostrarMatriz(m1, MATRIX_W, MATRIX_H, "M1");}
             break;
     }
+    seleccion = false;
 }
 
 void salir(){
