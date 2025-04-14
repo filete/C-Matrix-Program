@@ -22,14 +22,13 @@ ___
 - - [x] g) Guardar y mostrar determinante
 - - [x] z) Salir
 ___
-- [ ] ### 4. Llame a una función que resuelva la opción seleccionada o salir del programa
+- [x] ### 4. Llame a una función que resuelva la opción seleccionada o salir del programa
 ___
-- [ ] ### 5. Vuelva al paso _3_
+- [x] ### 5. Vuelva al paso _3_
+___
+- [x] ### EXTRA
+Añadir ventana de información.
 ___
 #### <ins>Cosas a tener en cuenta</ins>
 
-> Tendré que crear una función para que se guarde la matriz en el fichero _'resultado.txt'_
-
-```c
-exit(1)
-```
+> ~~Tendré que crear una función para que se guarde la matriz en el fichero _'resultado.txt'_~~

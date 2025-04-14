@@ -10,7 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include "colorGuide.c"
+#include "colorGuide.h"
 
 #define I_FILENAME "./matriz.txt"
 #define O_FILENAME "./resultado.txt"
@@ -26,9 +26,9 @@ void guardarMatriz(FILE *, float [MATRIX_W][MATRIX_H],int,int);
 void sumM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
 void multM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
 void mostrarDeterminante(float [MATRIX_W][MATRIX_H]);
-void mostrarMenu();
+void mostrarMenu(FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 void tui(int);
-void ejecutarOpcion(int,bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
+void ejecutarOpcion(int, bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
 int salir();
 
 int main(void){
@@ -133,7 +133,7 @@ void mostrarMatriz(float matriz[MATRIX_W][MATRIX_H],int w, int h, char nombre[2]
 
 void guardarMatriz(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x,y;
-
+    file = fopen(O_FILENAME,"w+");
     if(file != NULL){
         for(size_t i = 0; i < (w*h); i++){
             y = i % w;
@@ -144,7 +144,7 @@ void guardarMatriz(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
                     (fprintf(file,"%8g \n",matriz[x][y]) ));
         }
         fclose(file);
-        printf(R_GREEN"\n\nArchivo "U_YELLOW"%s"R_RESET R_GREEN"creado correctamente "R_YELLOW":)\n"R_RESET,O_FILENAME+2);
+        printf(R_GREEN"\n\nArchivo "U_YELLOW"%s"R_RESET R_GREEN" creado correctamente "R_YELLOW":)\n"R_RESET,O_FILENAME+2);
     }else{
         printf(R_RED"Error al crear el archivo :(\n"R_RESET);
     }
