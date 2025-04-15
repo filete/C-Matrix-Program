@@ -236,7 +236,7 @@ void tui(int selector){
     system(CLEAR);
     switch(selector) {
     case 2:
-        printf(BU_BLACK"\n\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
         B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -247,7 +247,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n\n");
         break;
     case 3:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         B_GREEN"> [ 3 ] Calcular MR = M1 + M2\n"R_RESET
@@ -258,7 +258,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 4:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -269,7 +269,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 5:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -280,7 +280,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 6:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -291,7 +291,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
             break;
     case 7:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -302,7 +302,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 8:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -313,7 +313,7 @@ void tui(int selector){
         B_GREEN"> [ 8 ] Salir\n"R_RESET);
         break;
     default:
-        printf(BU_BLACK"Seleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BU_BLACK"\nSeleccione una opción."R_RESET"\nNavegue con ["U_BLACK"j(↓)"R_RESET", "U_BLACK"k(↑)"R_RESET" + ENTER], confirme con "U_BLACK"C"R_RESET"\nO pulse el no. de opción:\n\n"
         B_GREEN"> [ 1 ] Mostrar matriz M1\n"R_RESET
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
