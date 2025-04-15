@@ -46,7 +46,7 @@ int main(void){
     leeMatriz_cmd(resultado_txt, m2_4x4, MATRIX_W, MATRIX_H);
     multM1_M2(m1_4x4,m2_4x4,mr_4x4, MATRIX_W, MATRIX_H);
     mostrarMenu(resultado_txt, m1_4x4, m2_4x4, mr_4x4);
-  
+
     return 0;
 }
 
@@ -195,7 +195,7 @@ void mostrarDeterminante(float matriz[MATRIX_W][MATRIX_H]){
         determinante += (matriz[0][i] * matriz[1][(i+1) % 4] * matriz[2][(i+2) % 4] * matriz[3][(i+3) %4] -
         matriz[0][i] * matriz[1][(i-1) % 4] * matriz[2][(i-2) % 4] * matriz[3][(i-3) %4]);
     }
-    printf("\nDeterminante: %g\n", determinante);
+    printf("\n"BOLDUND"Determinante"R_RESET": %g\n", determinante);
 }
 
 void mostrarMenu(FILE * file,
@@ -243,7 +243,7 @@ void tui(int selector){
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
         "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n\n");
         break;
     case 3:
@@ -253,8 +253,8 @@ void tui(int selector){
         B_GREEN"> [ 3 ] Calcular MR = M1 + M2\n"R_RESET
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n");
         break;
     case 4:
@@ -264,8 +264,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         B_GREEN"> [ 4 ] Calcular MR = M1 * M2\n"R_RESET
         "  [ 5 ] Mostrar matriz MR\n"
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n");
         break;
     case 5:
@@ -275,8 +275,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         "  [ 4 ] Calcular MR = M1 * M2\n"
         B_GREEN"> [ 5 ] Mostrar matriz MR\n"R_RESET
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n");
         break;
     case 6:
@@ -286,8 +286,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
-        B_GREEN"> [ 6 ] Guardar MR (en \"resultado.txt\")\n"R_RESET
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        B_GREEN"> [ 6 ] Calcular (en \"resultado.txt\")\n"R_RESET
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n");
             break;
     case 7:
@@ -297,8 +297,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        B_GREEN"> [ 7 ] Guardar MR y mostrar determinante\n"R_RESET
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        B_GREEN"> [ 7 ] Calcular y mostrar determinante\n"R_RESET
         "  [ 8 ] Salir\n");
         break;
     case 8:
@@ -308,8 +308,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         B_GREEN"> [ 8 ] Salir\n"R_RESET);
         break;
     default:
@@ -319,8 +319,8 @@ void tui(int selector){
         "  [ 3 ] Calcular MR = M1 + M2\n"
         "  [ 4 ] Calcular MR = M1 * M2\n"
         "  [ 5 ] Mostrar matriz MR\n"
-        "  [ 6 ] Guardar MR (en \"resultado.txt\")\n"
-        "  [ 7 ] Guardar MR y mostrar determinante\n"
+        "  [ 6 ] Calcular (en \"resultado.txt\")\n"
+        "  [ 7 ] Calcular y mostrar determinante\n"
         "  [ 8 ] Salir\n");
         break;
     }
@@ -359,7 +359,6 @@ void ejecutarOpcion(int selector, bool seleccion,
                 break;
                 case 7:
         case '7':
-            guardarMatriz(file, mr, MATRIX_W, MATRIX_H);
             mostrarDeterminante(mr);
             break;
         case 8:
