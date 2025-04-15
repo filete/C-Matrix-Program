@@ -4,7 +4,21 @@ Realizado por Albert Tambwe Miñón entre _14 y 15 abril 2025_
 
 #### <ins>Contenidos</ins>
 __matrixProgram.c__ → Programa original.
+
 __lab9_atm1024.c__ → Programa comentando cada función con el código limpio de comentarios innecesarios y funciones de depurado.
+
+__colorGuide.h__ → Fichero cabecera para facilitar el uso de estilos ANSI, siéntase libre de usarlo.
+
+__matriz.txt__ → Fichero que contiene una M<sub>4</sub> para poderse usar en los apartados 1 y 3.
+___
+#### <ins>Anotaciones</ins>
+Algunas de las funciones están en inglés, y otras en español debido a que la mayoría del contenido que consumo está en inglés, por lo que algunos términos me resultan más sencillos de comprender y asociar en inglés. Esto tambiés se puede ver en el título de los commits.
+
+El control de versiones no lo controlo demasiado toadavía, por lo que las prácticas empleadas no serán las mejores.
+Algun commit puede ser un tanto innecesario, ya que los he estado usando como un sistema de guardado y transferencia entre equipos. De esta forma he podido experimentar el desarrollo en Linux con nvim y el windows con nvim y Fleet.
+
+Ninguna herramienta de IA ha sido usada durante el desarrollo del programa, ni generativa, ni QOL como inline autocomplete generativo.
+Únicamente se ha usado el autocomplado estático nativo de fleet y [nvim-cmp](https://github.com/hrsh7th/nvim-cmp).
 ___
 Crear un programa que:
 ###  1. Llame a una función para leer una matriz *M1* de 4 filas y 4 columnas desde un archivo "matriz.txt" con por ejemplo los siguiengtes datos:
