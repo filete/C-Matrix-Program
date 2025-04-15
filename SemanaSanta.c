@@ -404,7 +404,7 @@ void mostrarInfo(){
     system(CLEAR);
     printf("\nPrograma realizado por Albert Tambwe Miñón Apr/2025"
     "\nPara Progrmación - Ingeniería Informática - UBU\n\n"
-    U_BLUE"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
+    U_CYAN"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
 
     printf("\nPulse "U_BLACK"V"R_RESET" para cerrar la información.\n\n");
     while(salida != 'v' && salida != 'V'){

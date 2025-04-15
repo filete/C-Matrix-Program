@@ -32,3 +32,4 @@ ___
 #### <ins>Cosas a tener en cuenta</ins>
 
 > ~~Tendré que crear una función para que se guarde la matriz en el fichero _'resultado.txt'_~~
+- [ ] Cambiar colores [Negro R/B/BU_BLACK]
