@@ -30,10 +30,10 @@ Crear un programa que:
 |2|20|200|0.2|
 |3|30|300|0.3|
 |4|40|400|0.4|
-- [x]
+- [x] Terminado
 ___
 ### 2. Llame a una función para leer una matriz _M2_ 4x4, desde el teclado
-- [x]
+- [x] Terminado
 ___
 ### 3. Presenta un menú con las oopciones y pida una opción
 - - [x] a) Mostrar matriz M1
@@ -45,13 +45,13 @@ ___
 - - [x] g) Calcular y mostrar determinante
 - - [x] z) Salir
 
-- [x]
+- [x] Terminado
 ___
 ### 4. Llame a una función que resuelva la opción seleccionada o salir del programa
- - [x]
+ - [x] Terminado
 ___
 ### 5. Vuelva al paso _3_
-- [x]
+- [x] Terminado
 ___
 ### EXTRA
 - [x] Añadir ventana de información.
