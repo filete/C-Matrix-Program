@@ -373,7 +373,7 @@ void ejecutarOpcion(int selector, bool seleccion,
                 mostrarMatriz(m1, MATRIX_W, MATRIX_H, "M1");
                 break;
         }
-    printf("\nPulse "U_BLACK"V"R_RESET" volver al menú.\n\n");
+    printf("\nPulse "U_BLACK"V"R_RESET" para volver al menú.\n\n");
     while(volver != 'v' && volver != 'V'){
         scanf("%c", &volver);
     }
@@ -398,8 +398,16 @@ int salir(){
 }
 
 void mostrarInfo(){
+    char salida;
+    salida = 0;
+
     system(CLEAR);
     printf("\nPrograma realizado por Albert Tambwe Miñón Apr/2025"
     "\nPara Progrmación - Ingeniería Informática - UBU\n\n"
     U_BLUE"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
+
+    printf("\nPulse "U_BLACK"V"R_RESET" para cerrar la información.\n\n");
+    while(salida != 'v' && salida != 'V'){
+        scanf("%c", &salida);
+    }
 }
