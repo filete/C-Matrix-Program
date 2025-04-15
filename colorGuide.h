@@ -19,6 +19,7 @@
 #define R_WHITE   "\x1b[36m"
 
 // Bold Colors
+#define BOLD      "\x1b[1m"
 #define B_BLACK   "\x1b[1;30m"
 #define B_RED     "\x1b[1;31m"
 #define B_GREEN   "\x1b[1;32m"
@@ -29,6 +30,7 @@
 #define B_WHITE   "\x1b[1;37m"
 
 // Underline Colors
+#define UNDERL    "\x1b[4m"
 #define U_BLACK   "\x1b[4;30m"
 #define U_RED     "\x1b[4;31m"
 #define U_GREEN   "\x1b[4;32m"
@@ -39,6 +41,7 @@
 #define U_WHITE   "\x1b[4;37m"
 
 // Bold Underlines Colors
+#define BOLDUND    "\x1b[1;4m"
 #define BU_BLACK   "\x1b[1;4;30m"
 #define BU_RED     "\x1b[1;4;31m"
 #define BU_GREEN   "\x1b[1;4;32m"
