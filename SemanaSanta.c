@@ -388,7 +388,7 @@ int salir(){
     BU_RED  "S"R_RESET B_RED  "i"R_RESET" \t(Introduzca \"S\")\n"
     BU_GREEN"N"R_RESET B_GREEN"o"R_RESET" \t(Introduzca \"N\")\n"
     UNDERL"I"R_RESET "nfo\t(Introduzca \"I\")\n");
-    scanf(" %[sInNiI]",&salida);
+    scanf(" %[sSnNiI]",&salida);
     if(salida == 's' || salida == 'S'){
         exit(1);
     }else{
