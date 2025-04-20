@@ -1,47 +1,56 @@
-/* Programa que lee matrices de documentos, las muestra por pantalla y hace cálculos
- * ver 11/abr/2025 by ATM */
+/* lab9_atm1024
+ * Programa que lee y escribe matrices desde y en ficheros,
+ *  a través de un menú interactivo permite mostrar y almacenar matrices,
+ *  y realizar cálculos matriciales.
 
+ * Compilador usado: gcc
+ * SO probados: MS Windows, Linux (Arch y Ubuntu)
+ * Dependencias: lab9_atm1024.h y colorGuide.h
+
+ * Realizado para la asignatura Programación
+ *  Grado en Ingeniería Informática - Universidad de Burgos
+ * Autor: Albert Tambwe Miñón
+ * Fecha: 14/15 abr 2025
+ * ver 1.0.1
+ *      1.0.0 Programa final
+ *      1.0.1 Implementación de comentarios en el código
+ * */
+
+// Definición del CLEAR para una mayor claridad al momento de usar el programa
+// en función del SO donde se compile se realizará una deefinición u otra
 #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
 #define CLEAR "clear"
 #elif defined(_WIN32) || defined(_WIN64)
 #define CLEAR "cls"
 #endif
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
-#include "colorGuide.h"
+// Cabeceras de las librerías y ficheros para el correcto funcionar del programa
+// IMPORTANTE -> Mantener los ficheros "lab9_atm1024.c" y "colorGuide.h" en la carpeta donde se ubique el programa
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "lab9_atm1024.h"               // Cabeceras de las funciones declaradas en el programa
+#include "colorGuide.h"                 // Archivo de definición de colores de la consola
 
-#define I_FILENAME "./matriz.txt"
-#define O_FILENAME "./resultado.txt"
+#define I_FILENAME "./matriz.txt"       // Fichero con matriz de entrada
+#define O_FILENAME "./resultado.txt"    // Fichero con matriz de salida
 
-#define ELM(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
-#define MATRIX_H 4
-#define MATRIX_W 4
-
-void leeMatriz_file(FILE *, float[MATRIX_W][MATRIX_H], int, int);
-void leeMatriz_cmd(FILE *, float[MATRIX_W][MATRIX_H], int, int);
-void mostrarMatriz(float [MATRIX_W][MATRIX_H],int ,int,char [2]);
-void guardarMatriz(FILE *, float [MATRIX_W][MATRIX_H],int,int);
-void sumM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
-void multM1_M2(float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],float [MATRIX_W][MATRIX_H],int,int);
-void mostrarDeterminante(float [MATRIX_W][MATRIX_H]);
-void mostrarMenu(FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
-void tui(int);
-void ejecutarOpcion(int, bool, FILE *, float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H], float [MATRIX_W][MATRIX_H]);
-int salir();
-int mostrarInfo();
+#define MATRIX_H 4                      // Alto de la matriz, en caso de tener que cambiarse en un futuro
+#define MATRIX_W 4                      // Ancho de la matriz, en caso de tener que cambiarse en un futuro
 
 int main(void){
+    // Declaración de los arrays 2D de las matrices a utilizar
     float m1_4x4 [MATRIX_W][MATRIX_H];
     float m2_4x4 [MATRIX_W][MATRIX_H];
     float mr_4x4 [MATRIX_W][MATRIX_H];
 
+    // Declaración de los ficheros a utilizar
     FILE *matriz_txt = fopen(I_FILENAME,"r");
     FILE *resultado_txt = fopen(O_FILENAME,"w+");
 
     system(CLEAR);
 
+    // Llamada a las funciones del programa
     leeMatriz_file(matriz_txt, m1_4x4, MATRIX_W, MATRIX_H);
     leeMatriz_cmd(resultado_txt, m2_4x4, MATRIX_W, MATRIX_H);
     multM1_M2(m1_4x4,m2_4x4,mr_4x4, MATRIX_W, MATRIX_H);
@@ -50,20 +59,18 @@ int main(void){
     return 0;
 }
 
+/*  Función que lee una matriz del fichero de entrada y la almacena en un Arr.2D .  No he considerado necesaria la lectura adelantada.
+ *  @Param_1    I/ fichero de entrada
+ *  @Param_2    I/ array matriz
+ *  @Param_3,4  I/ alto y ancho de la matriz  */
 void leeMatriz_file(FILE *matriz_txt, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x,y;
 
     if(matriz_txt!= NULL){
-        //printf("\nMatriz "R_CYAN"M1"R_RESET" del documento "U_YELLOW"%s"R_RESET":\n", I_FILENAME + 2);
         for(size_t i = 0; i < (w*h); i++){
         y = i % w;
         x = (int) i/h;
-
             fscanf(matriz_txt,"%f",&matriz[x][y]);
-/*        i % w == 0 ? printf("\t%g ",matriz[x][y]) :       DEBUGGING
-            (i % w < 3 ? (printf("%g ",matriz[x][y]) ) :
-                (printf("%g \n",matriz[x][y]) )
-            );*/
         }
         fclose(matriz_txt);
         printf(R_GREEN"\nArchivo " U_YELLOW "%s"R_RESET R_GREEN" leido correctamente "R_YELLOW":)\n"R_RESET, I_FILENAME +2);
@@ -79,6 +86,10 @@ void leeMatriz_file(FILE *matriz_txt, float matriz[MATRIX_W][MATRIX_H], int w, i
     }
 }
 
+/*  Función que lee una matriz desde la terminal y la almacena en un Arr.2D .
+ *  @Param_1    I/ fichero de salida
+ *  @Param_2    I/ array matriz
+ *  @Param_3,4  I/ ancho y alto de la matriz  */
 void leeMatriz_cmd(FILE *resultado_txt, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x, y;
     char c;
@@ -113,11 +124,13 @@ void leeMatriz_cmd(FILE *resultado_txt, float matriz[MATRIX_W][MATRIX_H], int w,
     scanf(" %c", &c);
     if(c){
         system(CLEAR);
-        //printf("\e[1;1H\e[2J");
-        //printf("c es %d",c);      DEBUGGING
     }
 }
 
+/*  Función que muestra una matriz en la terminal
+ *  @Param_1    I/ array matriz
+ *  @Param_2,3  I/ ancho y alto de la matriz
+ *  @Param_4    I/ nombre de la matriz (2 dígitos máx.)     */
 void mostrarMatriz(float matriz[MATRIX_W][MATRIX_H],int w, int h, char nombre[2]){
     int x,y;
     printf("\n\nMatriz "R_CYAN"%s"R_RESET":\n\n", nombre);
@@ -132,6 +145,10 @@ void mostrarMatriz(float matriz[MATRIX_W][MATRIX_H],int w, int h, char nombre[2]
             );}
 }
 
+/*  Función que almacena una matriz en un archivo de salida
+ *  @Param_1    I/ fichero de salida
+ *  @Param_2    I/ array matriz_t
+ *  @Param_3,4  I/ ancho y alto de la matriz        */
 void guardarMatriz(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     int x,y;
     file = fopen(O_FILENAME,"w+");
@@ -151,6 +168,11 @@ void guardarMatriz(FILE *file, float matriz[MATRIX_W][MATRIX_H], int w, int h){
     }
 }
 
+/*  Función que suma 2 matrices y almacena el resultado en otra matriz M1+M2 = MR
+ *  @Param_1    I/ matriz M1
+ *  @Param_2    I/ matriz M2
+ *  @Param_3    I/ matriz MR
+ *  @Param_4,5  I/ ancho y alto de las matrices     */
 void sumM1_M2(
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
@@ -162,12 +184,16 @@ void sumM1_M2(
     for(size_t i = 0; i < (w*h); i++){
         y = i % w;
         x = (int) i/h;
-
         mr[x][y] = m1[x][y] + m2[x][y];
     }
     printf(R_GREEN"\n\nSuma realizada correctamente "R_YELLOW":)"R_RESET);
 }
 
+/*  Función que multiplica 2 matrices y almacena el resultado en otra matriz M1*M2 = MR
+ *  @Param_1    I/ matriz M1
+ *  @Param_2    I/ matriz M2
+ *  @Param_3    I/ matriz MR
+ *  @Param_4,5  I/ ancho y alto de las matrices     */
 void multM1_M2(
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
@@ -189,6 +215,8 @@ void multM1_M2(
     printf(R_GREEN"\n\nProducto realizado correctamente "R_YELLOW":)"R_RESET);
 }
 
+/*  Función que calcula el determinante de una matriz
+ *  @Param_1    I/ array matriz     */
 void mostrarDeterminante(float matriz[MATRIX_W][MATRIX_H]){
     float determinante = 0;
     for(size_t i = 0; i < MATRIX_W ; i++){
@@ -198,6 +226,11 @@ void mostrarDeterminante(float matriz[MATRIX_W][MATRIX_H]){
     printf("\n"BOLDUND"Determinante"R_RESET": %g\n", determinante);
 }
 
+/*  Función que procesa las entradas del el menú por la terminal
+ *  @Param_1    I/ fichero de salida para las funciones que requieran almacenar un resultado
+ *  @Param_2    I/ matriz M1
+ *  @Param_3    I/ matriz M2
+ *  @Param_4    I/ matriz MR        */
 void mostrarMenu(FILE * file,
     float m1[MATRIX_W][MATRIX_H],
     float m2[MATRIX_W][MATRIX_H],
@@ -232,11 +265,13 @@ void mostrarMenu(FILE * file,
     }
 }
 
+/*  Función que muestra el menú por la terminal
+ *  @Param_1    I/ índice de la opción actual       */
 void tui(int selector){
     system(CLEAR);
     switch(selector) {
     case 2:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
             "  [ 1 ] Mostrar matriz M1\n"
         B_GREEN"> [ 2 ] Mostrar matriz M2\n"R_RESET
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -247,7 +282,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n\n");
         break;
     case 3:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         B_GREEN"> [ 3 ] Calcular MR = M1 + M2\n"R_RESET
@@ -258,7 +293,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 4:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -269,7 +304,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 5:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -280,7 +315,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 6:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -291,7 +326,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
             break;
     case 7:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -302,7 +337,7 @@ void tui(int selector){
         "  [ 8 ] Salir\n");
         break;
     case 8:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         "  [ 1 ] Mostrar matriz M1\n"
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -313,7 +348,7 @@ void tui(int selector){
         B_GREEN"> [ 8 ] Salir\n"R_RESET);
         break;
     default:
-        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO pulse el no. de opción:\n\n"
+        printf(BOLDUND"\nSeleccione una opción."R_RESET"\nNavegue con ["UNDERL"j(↓)"R_RESET", "UNDERL"k(↑)"R_RESET" + ENTER], confirme con "UNDERL"C"R_RESET"\nO introduzca el no. de opción:\n\n"
         B_GREEN"> [ 1 ] Mostrar matriz M1\n"R_RESET
         "  [ 2 ] Mostrar matriz M2\n"
         "  [ 3 ] Calcular MR = M1 + M2\n"
@@ -326,6 +361,12 @@ void tui(int selector){
     }
 }
 
+/*  Función que ejecuta las opciones seleccionadas del menú
+ *  @Param_1    I/ índice la opción actual
+ *  @Param_2    I/ estado de la selección (Seleccionada/No seleccionada)
+ *  @Param_3    I/ matriz M1
+ *  @Param_4    I/ matriz M2
+ *  @Param_5    I/ matriz MR        */
 void ejecutarOpcion(int selector, bool seleccion,
     FILE * file,
     float m1[MATRIX_W][MATRIX_H],
@@ -373,13 +414,15 @@ void ejecutarOpcion(int selector, bool seleccion,
                 break;
         }
     if(!yaVolvio){
-        printf("\nPulse "UNDERL"V"R_RESET" para volver al menú.\n\n");
+        printf("\nIntroduzca "UNDERL"V"R_RESET" para volver al menú.\n\n");
         while(volver != 'v' && volver != 'V'){
             scanf(" %c", &volver);
         }
     }
 }
 
+/*  Función que procesa la salida del programa
+ *  @return /O señal de retorno al programa     */
 int salir(){
     char salida = 0;
     system(CLEAR);
@@ -398,6 +441,8 @@ int salir(){
     return 1;
 }
 
+/*  Función que muestra información sobre el programa
+ *  @return /O señal de retorno al programa     */
 int mostrarInfo(){
     char salida = 0;
 
@@ -406,7 +451,7 @@ int mostrarInfo(){
     "\nPara Progrmación - Ingeniería Informática - UBU\n\n"
     U_CYAN"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
 
-    printf("\nPulse "UNDERL"V"R_RESET" para cerrar la información.\n\n");
+    printf("\nIntroduzca "UNDERL"V"R_RESET" para cerrar la información.\n\n");
     while(salida != 'v' && salida != 'V'){
         scanf(" %c", &salida);
     }

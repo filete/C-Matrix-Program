@@ -373,7 +373,7 @@ void ejecutarOpcion(int selector, bool seleccion,
                 break;
         }
     if(!yaVolvio){
-        printf("\nPulse "UNDERL"V"R_RESET" para volver al menú.\n\n");
+        printf("\nIntroduzca "UNDERL"V"R_RESET" para volver al menú.\n\n");
         while(volver != 'v' && volver != 'V'){
             scanf(" %c", &volver);
         }
@@ -406,7 +406,7 @@ int mostrarInfo(){
     "\nPara Progrmación - Ingeniería Informática - UBU\n\n"
     U_CYAN"https://github.com/filete/C-Matrix-Program-For-Semana-Santa.git\n"R_RESET);
 
-    printf("\nPulse "UNDERL"V"R_RESET" para cerrar la información.\n\n");
+    printf("\nIntroduzca "UNDERL"V"R_RESET" para cerrar la información.\n\n");
     while(salida != 'v' && salida != 'V'){
         scanf(" %c", &salida);
     }
